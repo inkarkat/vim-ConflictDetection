@@ -16,16 +16,60 @@ if exists('g:loaded_ConflictDetection') || (v:version < 700)
 endif
 let g:loaded_ConflictDetection = 1
 
-function! HighlightConflicts()
-    syntax region conflictOurs   matchgroup=conflictOursMarker start="^<\{7}<\@!.*$"   end="^\([=|]\)\{7}\1\@!"me=s-1 keepend containedin=TOP
-    syntax region conflictBase   matchgroup=conflictBaseMarker start="^|\{7}|\@!.*$"   end="^=\{7}=\@!"me=s-1         keepend containedin=TOP
-    syntax region conflictTheirs start="^=\{7}=\@!.*$" matchgroup=conflictTheirsMarker end="^>\{7}>\@!.*$"            keepend containedin=TOP contains=conflictSeparatorMarkerSymbol
+"- configuration ---------------------------------------------------------------
 
-    syntax match conflictOursMarkerSymbol       "^<\{7}"        contained
-    syntax match conflictBaseMarkerSymbol       "^|\{7}"        contained
-    syntax match conflictSeparatorMarkerSymbol  "^=\{7}"        contained
-    syntax match conflictTheirsMarkerSymbol     "^>\{7}"        contained
+if ! exists('g:ConflictDetection_AutoDetectEvents')
+    let g:ConflictDetection_AutoDetectEvents = 'BufReadPost,BufWritePre'
+endif
+if ! exists('g:ConflictDetection_WarnEvents')
+    let g:ConflictDetection_WarnEvents = 'BufReadPost,BufWritePost'
+endif
+
+
+"- functions -------------------------------------------------------------------
+
+function! s:ConflictCheck()
+    let b:conflicted = !! search('^\([<=>|]\)\{7}\1\@!', 'cnw')
 endfunction
+function! s:ConflictWarn()
+    if ! exists('b:conflicted')
+	call s:ConflictCheck()
+    endif
+
+    if b:conflicted
+	let v:warningmsg = 'Conflict markers found'
+	echohl WarningMsg
+	echomsg v:warningmsg
+	echohl None
+    endif
+endfunction
+function! s:ConflictHighlight()
+    if ! exists('b:conflicted')
+	call s:ConflictCheck()
+    endif
+
+    if b:conflicted
+	call ConflictDetection#Highlight()
+    endif
+endfunction
+
+
+"- autocmds --------------------------------------------------------------------
+
+augroup ConflictDetection
+    autocmd!
+    if ! empty(g:ConflictDetection_AutoDetectEvents)
+	execute 'autocmd' g:ConflictDetection_AutoDetectEvents '* call <SID>ConflictCheck()'
+    endif
+    if ! empty(g:ConflictDetection_WarnEvents)
+	execute 'autocmd' g:ConflictDetection_WarnEvents '* call <SID>ConflictWarn()'
+    endif
+
+    autocmd BufReadPost,FileType * call <SID>ConflictHighlight()
+augroup END
+
+
+"- highlight groups ------------------------------------------------------------
 
 highlight def link conflictOurs  DiffAdd
 highlight def link conflictBase  DiffChange
