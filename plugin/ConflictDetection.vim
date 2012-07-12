@@ -1,6 +1,7 @@
-" ConflictDetection.vim: summary
+" ConflictDetection.vim: Detect and highlight SCM conflict markers.
 "
 " DEPENDENCIES:
+"   - ConflictDetection.vim autoload script
 "
 " Copyright: (C) 2012 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
@@ -71,13 +72,21 @@ augroup END
 
 "- highlight groups ------------------------------------------------------------
 
-highlight def link conflictOurs  DiffAdd
-highlight def link conflictBase  DiffChange
-highlight def link conflictTheirs DiffText
+highlight def link conflictOurs                     DiffAdd
+highlight def link conflictBase                     DiffChange
+highlight def link conflictTheirs                   DiffText
 highlight def link conflictSeparatorMarkerSymbol    NonText
-highlight def conflictOursMarker        gui=none guifg=#bada9f
-highlight def conflictBaseMarker        gui=none guifg=#e5d5ac
-highlight def conflictSeparatorMarker   gui=none guifg=#a0a0a0
-highlight def conflictTheirsMarker      gui=none guifg=#8cbee2
+
+highlight def conflictSeparatorMarker   ctermfg=Grey guifg=Grey
+function! s:HighlightMarkerDefaultsLikeDiffHighlights()
+    execute 'highlight def conflictOursMarker   ctermfg=' . synIDattr(synIDtrans(hlID('DiffAdd')),    'bg', 'cterm') . ' guifg=' . synIDattr(synIDtrans(hlID('DiffAdd')),    'bg', 'gui')
+    execute 'highlight def conflictBaseMarker   ctermfg=' . synIDattr(synIDtrans(hlID('DiffChange')), 'bg', 'cterm') . ' guifg=' . synIDattr(synIDtrans(hlID('DiffChange')), 'bg', 'gui')
+    execute 'highlight def conflictTheirsMarker ctermfg=' . synIDattr(synIDtrans(hlID('DiffText')),   'bg', 'cterm') . ' guifg=' . synIDattr(synIDtrans(hlID('DiffText')),   'bg', 'gui')
+endfunction
+if has('gui_running')
+    autocmd GuiEnter * call <SID>HighlightMarkerDefaultsLikeDiffHighlights()
+else
+    call s:HighlightMarkerDefaultsLikeDiffHighlights()
+endif
 
 " vim: set ts=8 sts=4 sw=4 noexpandtab ff=unix fdm=syntax :
