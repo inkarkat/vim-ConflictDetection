@@ -24,7 +24,7 @@ RELATED WORKS								     *
 
 To quickly locate and resolve the conflicts, you can use the motions and text
 objects provided by the companion |ConflictMotions.vim| plugin (vimscript
-#0000).
+#3991).
 
 ==============================================================================
 USAGE						     *ConflictDetection-usage*
