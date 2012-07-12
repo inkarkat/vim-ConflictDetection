@@ -1,4 +1,4 @@
-" ConflictDetection.vim: summary
+" ConflictDetection.vim: Detect and highlight SCM conflict markers.
 "
 " DEPENDENCIES:
 "
