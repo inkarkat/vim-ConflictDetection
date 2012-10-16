@@ -9,7 +9,7 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
-"	001	12-Mar-2012	file creation
+"   1.00.001	12-Mar-2012	file creation
 
 " Avoid installing twice or when in unsupported Vim version.
 if exists('g:loaded_ConflictDetection') || (v:version < 700)
