@@ -1,0 +1,3 @@
+autoload/ConflictDetection.vim
+plugin/ConflictDetection.vim
+doc/ConflictDetection.txt
