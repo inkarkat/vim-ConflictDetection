@@ -109,6 +109,7 @@ IDEAS						     *ConflictDetection-ideas*
 ==============================================================================
 HISTORY						   *ConflictDetection-history*
 
+1.00	13-Jul-2012
 First published version.
 
 0.01	14-Mar-2012
