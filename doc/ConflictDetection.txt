@@ -109,6 +109,9 @@ IDEAS						     *ConflictDetection-ideas*
 ==============================================================================
 HISTORY						   *ConflictDetection-history*
 
+1.10	04-Dec-2012
+ENH: Add :ConflictSyntaxOnly command.
+
 1.02	16-Nov-2012
 FIX: Avoid E417 / E421 in conflict marker highlight group definitions when no
 original color is defined (i.e. when the colorscheme does not define a cterm /
