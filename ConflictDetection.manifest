@@ -1,4 +1,3 @@
-autoload/ingotimelimitedsearch.vim
 autoload/ConflictDetection.vim
 plugin/ConflictDetection.vim
 doc/ConflictDetection.txt
