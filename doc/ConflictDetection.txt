@@ -116,7 +116,7 @@ IDEAS						     *ConflictDetection-ideas*
 ==============================================================================
 HISTORY						   *ConflictDetection-history*
 
-1.12	RELEASEME
+1.12	27-Mar-2013
 - To avoid false positives (e.g. in nested email replies), ensure that both
   "our" and "theirs" markers do exist.
 - Add dependency to ingo-library (vimscript #4433).
